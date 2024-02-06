@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine proposal </title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+        }
+ 
+        .valentine-container {
+            text-align: center;
+            padding: 20px;
+        }
+ 
+        .yesButton {
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+ 
+        .noButton {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+ 
+        .text {
+            font-size: 20px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+ 
+<body>
+    <div id="valentine-container"></div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const phrases = [
+                'No',
+                'Are you sure?',
+                'Really sure?',
+                'baby please',
+                "Don't do this to me",
+                "I'm gonna cry...",
+                "You're breaking my heart ;(",
+                "Please don't go :(",
+            ];
+ 
+            let noCount = 0;
+            let yesPressed = false;
+ 
+            function handleNoClick() {
+                noCount++;
+                updateNoButtonText();
+                updateYesButtonSize();
+                renderApp();
+            }
+ 
+            function getNoButtonText() {
+                return phrases[Math.min(noCount, phrases.length - 1)];
+            }
+ 
+            function updateNoButtonText() {
+                document.querySelector('.noButton').innerText = getNoButtonText();
+            }
+ 
+            function updateYesButtonSize() {
+                const yesButton = document.querySelector('.yesButton');
+                const yesButtonSize = noCount * 20 + 16;
+                yesButton.style.fontSize = yesButtonSize + 'px';
+            }
+ 
+            function renderApp() {
+                const valentineContainer = document.getElementById('valentine-container');
+                valentineContainer.innerHTML = '';
+ 
+                if (yesPressed) {
+                    const img = document.createElement('img');
+                    img.alt = 'bears kissing';
+                    img.src =
+                        'https://media.tenor.com/gUiu1zyxfzYAAAAi/bear-kiss-bear-kisses.gif';
+ 
+                    const text = document.createElement('div');
+                    text.className = 'text';
+                    text.innerText = 'Yay!!!!';
+ 
+                    valentineContainer.appendChild(img);
+                    valentineContainer.appendChild(text);
+                } else {
+                    const img = document.createElement('img');
+                    img.alt = 'bear with hearts';
+                    img.src =
+                        'https://gifdb.com/images/high/cute-love-bear-roses-ou7zho5oosxnpo6k.gif';
+ 
+                    const questionText = document.createElement('div');
+                    questionText.innerText = 'Will you be my valentine?';
+ 
+                    const yesButton = document.createElement('button');
+                    yesButton.className = 'yesButton';
+                    yesButton.innerText = 'Yes';
+                    yesButton.addEventListener('click', function () {
+                        yesPressed = true;
+                        renderApp();
+                    });
+ 
+                    const noButton = document.createElement('button');
+                    noButton.className = 'noButton';
+                    noButton.innerText = getNoButtonText();
+                    noButton.addEventListener('click', handleNoClick);
+ 
+                    valentineContainer.appendChild(img);
+                    valentineContainer.appendChild(questionText);
+                    valentineContainer.appendChild(yesButton);
+                    valentineContainer.appendChild(noButton);
+ 
+                    updateYesButtonSize(); // Ensure initial size is set
+                }
+            }
+ 
+            renderApp();
+        });
+ 
+    </script>
+</body>
+ 
+</html>
